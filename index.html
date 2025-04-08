@@ -160,42 +160,6 @@
         background-color: rgba(0, 0, 0, 0.5);
         z-index: 99;
       }
-
-      /* 履歴アイテムのスタイル */
-      .history-item {
-        position: relative;
-        background-color: rgba(139, 158, 135, 0.2);
-        padding: 12px;
-        border-radius: 6px;
-        transition: all 0.2s ease;
-      }
-
-      .history-item:hover {
-        background-color: rgba(139, 158, 135, 0.3);
-      }
-
-      .history-item-content {
-        padding-right: 24px;
-      }
-
-      .history-delete-btn {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        color: #5a6e65;
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-size: 12px;
-        opacity: 0.5;
-        transition: all 0.2s ease;
-      }
-
-      .history-delete-btn:hover {
-        opacity: 1;
-        color: #d32f2f;
-        transform: scale(1.2);
-      }
     </style>
   </head>
   <body class="bg-paper min-h-screen">
@@ -203,30 +167,21 @@
       <div class="flex justify-between items-center mb-6">
         <h1 class="text-3xl font-bold text-primary flex items-center">
           <i class="fas fa-brush mr-3 text-accent"></i>
-          <span id="app-title">縦書きエディタ</span>
+          <span>縦書きエディタ</span>
         </h1>
 
-        <div class="flex items-center space-x-4">
-          <div
-            class="flex items-center bg-white rounded-full shadow-md overflow-hidden language-selector"
+        <div class="flex items-center space-x-2">
+          <button
+            id="settings-btn"
+            class="p-2 rounded-full bg-white shadow-md hover:bg-accent hover:text-paper transition-colors"
+            title="設定"
           >
-            <button
-              id="lang-ja"
-              class="px-4 py-2 font-medium text-paper bg-primary"
-            >
-              <i class="fas fa-language mr-2"></i>日本語
-            </button>
-            <button
-              id="lang-en"
-              class="px-4 py-2 font-medium text-primary bg-paper"
-            >
-              <i class="fas fa-language mr-2"></i>English
-            </button>
-          </div>
-
+            <i class="fas fa-cog text-primary"></i>
+          </button>
           <button
             id="help-btn"
             class="p-2 rounded-full bg-white shadow-md hover:bg-accent hover:text-paper transition-colors"
+            title="ヘルプ"
           >
             <i class="fas fa-question text-primary"></i>
           </button>
@@ -234,7 +189,7 @@
       </div>
 
       <div class="flex flex-col lg:flex-row gap-6">
-        <div class="w-full lg:w-3/4">
+        <div class="w-full">
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div
               class="flex justify-between items-center toolbar-container px-4 py-2"
@@ -276,99 +231,6 @@
               </div>
             </div>
           </div>
-
-          <!-- 保存ボタンをエディタの下に移動 -->
-          <div class="mt-4">
-            <button
-              id="save-btn"
-              class="w-full bg-primary text-paper py-3 px-4 rounded-md hover:bg-secondary transition-colors flex items-center justify-center"
-            >
-              <i class="fas fa-save mr-2"></i>
-              <span id="save-text">保存する</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="w-full lg:w-1/4">
-          <div class="bg-white rounded-lg shadow-md p-6 h-full fade-in">
-            <div class="flex justify-between items-center mb-4">
-              <h3 class="text-xl font-bold text-primary" id="history-title">
-                履歴
-              </h3>
-              <button
-                id="clear-all-history"
-                class="text-xs text-secondary hover:text-primary transition-colors"
-              >
-                <i class="fas fa-trash-alt mr-1"></i>すべて削除
-              </button>
-            </div>
-            <div id="history-list" class="space-y-2 max-h-80 overflow-y-auto">
-              <div class="text-secondary italic" id="no-history">
-                履歴がありません
-              </div>
-            </div>
-
-            <div class="mt-6 pt-4">
-              <h3
-                class="text-xl font-bold mb-4 text-primary"
-                id="settings-title"
-              >
-                設定
-              </h3>
-              <div class="space-y-4">
-                <div>
-                  <label
-                    class="block text-sm font-medium text-primary mb-1"
-                    id="font-size-label"
-                    >文字サイズ</label
-                  >
-                  <input
-                    type="range"
-                    id="font-size"
-                    min="12"
-                    max="36"
-                    value="16"
-                    class="w-full accent-primary"
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-sm font-medium text-primary mb-1"
-                    id="line-spacing-label"
-                    >行間</label
-                  >
-                  <input
-                    type="range"
-                    id="line-spacing"
-                    min="1"
-                    max="5"
-                    step="0.5"
-                    value="2.5"
-                    class="w-full accent-primary"
-                  />
-                </div>
-                <div>
-                  <label
-                    class="block text-sm font-medium text-primary mb-1"
-                    id="editor-height-label"
-                    >エディタの高さ</label
-                  >
-                  <input
-                    type="range"
-                    id="editor-height"
-                    min="300"
-                    max="800"
-                    step="10"
-                    value="500"
-                    class="w-full accent-primary"
-                  />
-                  <div class="text-xs text-secondary mt-1" id="height-value">
-                    500px
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -399,12 +261,94 @@
           </p>
           <p>アルファベットは自動的に横倒し（縦中横）で表示されます。</p>
           <p>
-            右側のパネルから文字サイズ、行間、エディタの高さを調整できます。
+            設定パネルから文字サイズ、行間、エディタの高さを調整できます。
           </p>
-          <p>「保存する」ボタンで現在のテキストを履歴に保存できます。</p>
           <p class="text-sm text-secondary">
-            ※ このアプリはブラウザ上で動作し、データはローカルに保存されます。
+            ※ このアプリはブラウザ上で動作します。
           </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div
+      id="settings-modal"
+      class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
+    >
+      <div
+        class="bg-paper rounded-lg shadow-xl max-w-md w-full p-6 max-h-[80vh] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-bold text-primary">
+            設定
+          </h3>
+          <button id="close-settings" class="text-primary hover:text-secondary">
+            <i class="fa-solid fa-check"></i>
+          </button>
+        </div>
+        <div class="space-y-6 text-primary">
+          <div>
+            <label class="block text-sm font-medium text-primary mb-2">
+              文字サイズ
+            </label>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs text-secondary">小</span>
+              <input
+                type="range"
+                id="font-size"
+                min="12"
+                max="36"
+                value="16"
+                class="w-full accent-primary"
+              />
+              <span class="text-xs text-secondary">大</span>
+            </div>
+            <div class="text-xs text-secondary mt-1 text-center" id="font-size-value">
+              16px
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-primary mb-2">
+              行間
+            </label>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs text-secondary">狭</span>
+              <input
+                type="range"
+                id="line-spacing"
+                min="1"
+                max="5"
+                step="0.5"
+                value="2.5"
+                class="w-full accent-primary"
+              />
+              <span class="text-xs text-secondary">広</span>
+            </div>
+            <div class="text-xs text-secondary mt-1 text-center" id="line-spacing-value">
+              2.5
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-primary mb-2">
+              エディタの高さ
+            </label>
+            <div class="flex items-center space-x-2">
+              <span class="text-xs text-secondary">低</span>
+              <input
+                type="range"
+                id="editor-height"
+                min="300"
+                max="800"
+                step="10"
+                value="500"
+                class="w-full accent-primary"
+              />
+              <span class="text-xs text-secondary">高</span>
+            </div>
+            <div class="text-xs text-secondary mt-1 text-center" id="height-value">
+              500px
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -436,205 +380,8 @@
       </div>
     </div>
 
-    <!-- History Clear Confirmation Dialog -->
-    <div id="history-confirmation-dialog" class="hidden">
-      <div class="confirmation-dialog-overlay"></div>
-      <div class="confirmation-dialog">
-        <h3
-          class="text-lg font-bold text-primary mb-2"
-          id="history-confirmation-title"
-        >
-          確認
-        </h3>
-        <p class="text-primary" id="history-confirmation-message">
-          履歴をすべて削除しますか？この操作は元に戻せません。
-        </p>
-        <div class="confirmation-dialog-buttons">
-          <button
-            id="cancel-history-clear"
-            class="px-4 py-2 rounded-md border border-primary text-primary hover:bg-gray-100 transition-colors"
-          >
-            キャンセル
-          </button>
-          <button
-            id="confirm-history-clear"
-            class="px-4 py-2 rounded-md bg-primary text-paper hover:bg-secondary transition-colors"
-          >
-            削除する
-          </button>
-        </div>
-      </div>
-    </div>
-
     <script>
-      // Language management
-      const translations = {
-        en: {
-          appTitle: "Vertical Text Editor",
-          editorPlaceholder: "Type your text here...",
-          historyTitle: "History",
-          noHistory: "No history yet",
-          settingsTitle: "Settings",
-          fontSizeLabel: "Font Size",
-          lineSpacingLabel: "Line Spacing",
-          editorHeightLabel: "Editor Height",
-          saveText: "Save",
-          helpTitle: "Help",
-          helpContent: `
-                    <p>This vertical text editor allows you to write in traditional Japanese vertical writing style.</p>
-                    <p>Basic formatting like <strong>bold</strong> and <strong>underline</strong> is available.</p>
-                    <p>Alphabets are automatically displayed sideways (tatechuyoko).</p>
-                    <p>Adjust font size, line spacing and editor height from the right panel.</p>
-                    <p>Click "Save" to store your current text in history.</p>
-                    <p class="text-sm text-secondary">※ This app runs in your browser and data is stored locally.</p>
-                `,
-          charCount: "characters",
-          confirmationTitle: "Confirmation",
-          confirmationMessage:
-            "Are you sure you want to clear all content? This action cannot be undone.",
-          cancelText: "Cancel",
-          confirmText: "Clear",
-          historyClearAll: "Clear All",
-          historyDeleteItem: "Delete",
-          historyClearConfirmTitle: "Confirmation",
-          historyClearConfirmMessage:
-            "Are you sure you want to clear all history? This action cannot be undone.",
-          historyItemDeleteConfirmTitle: "Confirmation",
-          historyItemDeleteConfirmMessage:
-            "Are you sure you want to delete this history item? This action cannot be undone.",
-        },
-        ja: {
-          appTitle: "縦書きエディタ",
-          editorPlaceholder: "ここにテキストを入力してください...",
-          historyTitle: "履歴",
-          noHistory: "履歴がありません",
-          settingsTitle: "設定",
-          fontSizeLabel: "文字サイズ",
-          lineSpacingLabel: "行間",
-          editorHeightLabel: "エディタの高さ",
-          saveText: "保存する",
-          helpTitle: "ヘルプ",
-          helpContent: `
-                    <p>この縦書きエディタは日本語の伝統的な縦書きスタイルでテキストを書くことができます。</p>
-                    <p><strong>太字</strong>や<strong>下線</strong>などの基本的な書式設定が可能です。</p>
-                    <p>アルファベットは自動的に横倒し（縦中横）で表示されます。</p>
-                    <p>右側のパネルから文字サイズ、行間、エディタの高さを調整できます。</p>
-                    <p>「保存する」ボタンで現在のテキストを履歴に保存できます。</p>
-                    <p class="text-sm text-secondary">※ このアプリはブラウザ上で動作し、データはローカルに保存されます。</p>
-                `,
-          charCount: "文字",
-          confirmationTitle: "確認",
-          confirmationMessage:
-            "エディタの内容をすべて消去しますか？この操作は元に戻せません。",
-          cancelText: "キャンセル",
-          confirmText: "消去する",
-          historyClearAll: "すべて削除",
-          historyDeleteItem: "削除",
-          historyClearConfirmTitle: "確認",
-          historyClearConfirmMessage:
-            "履歴をすべて削除しますか？この操作は元に戻せません。",
-          historyItemDeleteConfirmTitle: "確認",
-          historyItemDeleteConfirmMessage:
-            "この履歴項目を削除しますか？この操作は元に戻せません。",
-        },
-      };
-
-      let currentLang = "ja";
-
-      // Set language
-      function setLanguage(lang) {
-        currentLang = lang;
-        const t = translations[lang];
-
-        // Update UI elements
-        document.getElementById("app-title").textContent = t.appTitle;
-        document
-          .getElementById("editor")
-          .setAttribute("placeholder", t.editorPlaceholder);
-        document.getElementById("history-title").textContent = t.historyTitle;
-        document.getElementById("no-history").textContent = t.noHistory;
-        document.getElementById("settings-title").textContent = t.settingsTitle;
-        document.getElementById("font-size-label").textContent =
-          t.fontSizeLabel;
-        document.getElementById("line-spacing-label").textContent =
-          t.lineSpacingLabel;
-        document.getElementById("editor-height-label").textContent =
-          t.editorHeightLabel;
-        document.getElementById("save-text").textContent = t.saveText;
-        document.getElementById("help-title").textContent = t.helpTitle;
-        document.getElementById("help-content").innerHTML = t.helpContent;
-        document.getElementById("confirmation-title").textContent =
-          t.confirmationTitle;
-        document.getElementById("confirmation-message").textContent =
-          t.confirmationMessage;
-        document.getElementById("cancel-clear").textContent = t.cancelText;
-        document.getElementById("confirm-clear").textContent = t.confirmText;
-        document.getElementById(
-          "clear-all-history"
-        ).innerHTML = `<i class="fas fa-trash-alt mr-1"></i>${t.historyClearAll}`;
-        document.getElementById("history-confirmation-title").textContent =
-          t.historyClearConfirmTitle;
-        document.getElementById("history-confirmation-message").textContent =
-          t.historyClearConfirmMessage;
-        document.getElementById("cancel-history-clear").textContent =
-          t.cancelText;
-        document.getElementById("confirm-history-clear").textContent =
-          t.confirmText;
-
-        // Update character count text
-        updateCharCount();
-
-        // Update language selector buttons
-        if (lang === "ja") {
-          document
-            .getElementById("lang-ja")
-            .classList.remove("bg-paper", "text-primary");
-          document
-            .getElementById("lang-ja")
-            .classList.add("bg-primary", "text-paper");
-          document
-            .getElementById("lang-en")
-            .classList.remove("bg-primary", "text-paper");
-          document
-            .getElementById("lang-en")
-            .classList.add("bg-paper", "text-primary");
-        } else {
-          document
-            .getElementById("lang-en")
-            .classList.remove("bg-paper", "text-primary");
-          document
-            .getElementById("lang-en")
-            .classList.add("bg-primary", "text-paper");
-          document
-            .getElementById("lang-ja")
-            .classList.remove("bg-primary", "text-paper");
-          document
-            .getElementById("lang-ja")
-            .classList.add("bg-paper", "text-primary");
-        }
-
-        // Update existing history items
-        const historyItems = document.querySelectorAll(".history-item");
-        historyItems.forEach((item) => {
-          const deleteBtn = item.querySelector(".history-delete-btn");
-          if (deleteBtn) {
-            deleteBtn.title = t.historyDeleteItem;
-          }
-        });
-      }
-
-      // Character count
-      function updateCharCount() {
-        const editor = document.getElementById("editor");
-        const text = editor.textContent.replace(/\s+/g, "");
-        const count = text.length;
-        document.getElementById("char-count").textContent = count;
-        document.querySelector(
-          ".character-count"
-        ).innerHTML = `<span id="char-count">${count}</span> ${translations[currentLang].charCount}`;
-      }
-
-      // Editor functionality
+      // エディタ機能
       function initEditor() {
         const editor = document.getElementById("editor");
         const editorContainer = document.getElementById("editor-container");
@@ -642,40 +389,32 @@
         const underlineBtn = document.getElementById("underline-btn");
         const clearFormatBtn = document.getElementById("clear-format-btn");
         const clearBtn = document.getElementById("clear-btn");
-        const saveBtn = document.getElementById("save-btn");
         const fontSizeSlider = document.getElementById("font-size");
+        const fontSizeValue = document.getElementById("font-size-value");
         const lineSpacingSlider = document.getElementById("line-spacing");
+        const lineSpacingValue = document.getElementById("line-spacing-value");
         const editorHeightSlider = document.getElementById("editor-height");
         const heightValueDisplay = document.getElementById("height-value");
         const helpBtn = document.getElementById("help-btn");
         const helpModal = document.getElementById("help-modal");
         const closeHelp = document.getElementById("close-help");
+        const settingsBtn = document.getElementById("settings-btn");
+        const settingsModal = document.getElementById("settings-modal");
+        const closeSettings = document.getElementById("close-settings");
         const confirmationDialog = document.getElementById(
           "confirmation-dialog"
         );
         const cancelClearBtn = document.getElementById("cancel-clear");
         const confirmClearBtn = document.getElementById("confirm-clear");
-        const clearAllHistoryBtn = document.getElementById("clear-all-history");
-        const historyConfirmationDialog = document.getElementById(
-          "history-confirmation-dialog"
-        );
-        const cancelHistoryClearBtn = document.getElementById(
-          "cancel-history-clear"
-        );
-        const confirmHistoryClearBtn = document.getElementById(
-          "confirm-history-clear"
-        );
 
-        // Clear placeholder on focus
+        // プレースホルダーテキストをフォーカス時に削除
         editor.addEventListener("focus", function () {
-          if (
-            this.textContent === translations[currentLang].editorPlaceholder
-          ) {
+          if (this.textContent === "ここにテキストを入力してください...") {
             this.textContent = "";
           }
         });
 
-        // Formatting buttons
+        // フォーマットボタン
         boldBtn.addEventListener("click", function () {
           document.execCommand("bold", false, null);
           editor.focus();
@@ -686,18 +425,18 @@
           editor.focus();
         });
 
-        // Clear all formatting
+        // 書式のクリア
         clearFormatBtn.addEventListener("click", function () {
           document.execCommand("removeFormat", false, null);
           editor.focus();
         });
 
-        // Clear all content with confirmation
+        // 全内容のクリア（確認ダイアログ付き）
         clearBtn.addEventListener("click", function () {
           confirmationDialog.classList.remove("hidden");
         });
 
-        // Handle confirmation dialog buttons
+        // 確認ダイアログの操作
         cancelClearBtn.addEventListener("click", function () {
           confirmationDialog.classList.add("hidden");
         });
@@ -709,106 +448,31 @@
           editor.focus();
         });
 
-        // Character count
+        // 文字数カウント
         editor.addEventListener("input", updateCharCount);
 
-        // Font size adjustment
+        // 文字サイズの調整
         fontSizeSlider.addEventListener("input", function () {
-          editor.style.fontSize = this.value + "px";
+          const size = this.value;
+          editor.style.fontSize = size + "px";
+          fontSizeValue.textContent = size + "px";
         });
 
-        // Line spacing adjustment
+        // 行間の調整
         lineSpacingSlider.addEventListener("input", function () {
-          editor.style.lineHeight = this.value;
+          const spacing = this.value;
+          editor.style.lineHeight = spacing;
+          lineSpacingValue.textContent = spacing;
         });
 
-        // Editor height adjustment
+        // エディタの高さ調整
         editorHeightSlider.addEventListener("input", function () {
           const height = this.value;
           editorContainer.style.height = `${height}px`;
           heightValueDisplay.textContent = `${height}px`;
         });
 
-        // Save to history
-        saveBtn.addEventListener("click", function () {
-          const text = editor.innerHTML;
-          if (
-            text.trim() === "" ||
-            text === translations[currentLang].editorPlaceholder
-          )
-            return;
-
-          const historyList = document.getElementById("history-list");
-          const noHistory = document.getElementById("no-history");
-
-          if (noHistory) noHistory.remove();
-
-          const now = new Date();
-          const timeString = now.toLocaleTimeString();
-
-          const historyItem = document.createElement("div");
-          historyItem.className = "history-item";
-          historyItem.innerHTML = `
-                    <div class="history-item-content">
-                        <div class="text-xs text-primary mb-1">${timeString}</div>
-                        <div class="text-primary line-clamp-2">${text
-                          .replace(/<[^>]*>/g, "")
-                          .substring(0, 50)}...</div>
-                    </div>
-                    <button class="history-delete-btn" title="${
-                      translations[currentLang].historyDeleteItem
-                    }">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-
-          // Add click event to load the content
-          historyItem
-            .querySelector(".history-item-content")
-            .addEventListener("click", function () {
-              editor.innerHTML = text;
-              updateCharCount();
-            });
-
-          // Add click event to delete button
-          const deleteBtn = historyItem.querySelector(".history-delete-btn");
-          deleteBtn.addEventListener("click", function (e) {
-            e.stopPropagation();
-            if (
-              confirm(translations[currentLang].historyItemDeleteConfirmMessage)
-            ) {
-              historyItem.remove();
-              checkEmptyHistory();
-            }
-          });
-
-          historyList.prepend(historyItem);
-        });
-
-        // Clear all history
-        clearAllHistoryBtn.addEventListener("click", function () {
-          historyConfirmationDialog.classList.remove("hidden");
-        });
-
-        cancelHistoryClearBtn.addEventListener("click", function () {
-          historyConfirmationDialog.classList.add("hidden");
-        });
-
-        confirmHistoryClearBtn.addEventListener("click", function () {
-          const historyList = document.getElementById("history-list");
-          historyList.innerHTML = `<div class="text-secondary italic" id="no-history">${translations[currentLang].noHistory}</div>`;
-          historyConfirmationDialog.classList.add("hidden");
-        });
-
-        // Check if history is empty
-        function checkEmptyHistory() {
-          const historyList = document.getElementById("history-list");
-          if (historyList.children.length === 0) {
-            historyList.innerHTML = `<div class="text-secondary italic" id="no-history">${translations[currentLang].noHistory}</div>`;
-          }
-        }
-
-        // Help modal
+        // ヘルプモーダル
         helpBtn.addEventListener("click", function () {
           helpModal.classList.remove("hidden");
         });
@@ -817,29 +481,46 @@
           helpModal.classList.add("hidden");
         });
 
-        // Language switcher
-        document
-          .getElementById("lang-ja")
-          .addEventListener("click", function () {
-            setLanguage("ja");
-          });
+        // 設定モーダル
+        settingsBtn.addEventListener("click", function () {
+          settingsModal.classList.remove("hidden");
+        });
 
-        document
-          .getElementById("lang-en")
-          .addEventListener("click", function () {
-            setLanguage("en");
-          });
+        closeSettings.addEventListener("click", function () {
+          settingsModal.classList.add("hidden");
+        });
 
-        // Initialize editor settings
+        // モーダル外クリックで閉じる
+        window.addEventListener("click", function (e) {
+          if (e.target === helpModal) {
+            helpModal.classList.add("hidden");
+          }
+          if (e.target === settingsModal) {
+            settingsModal.classList.add("hidden");
+          }
+        });
+
+        // エディタ設定の初期化
         editor.style.fontSize = fontSizeSlider.value + "px";
+        fontSizeValue.textContent = fontSizeSlider.value + "px";
         editor.style.lineHeight = lineSpacingSlider.value;
+        lineSpacingValue.textContent = lineSpacingSlider.value;
         editorContainer.style.height = `${editorHeightSlider.value}px`;
         heightValueDisplay.textContent = `${editorHeightSlider.value}px`;
       }
 
-      // Initialize
+      // 文字数カウント
+      function updateCharCount() {
+        const editor = document.getElementById("editor");
+        const text = editor.textContent.replace(/\s+/g, "");
+        const count = text.length;
+        document.getElementById("char-count").textContent = count;
+        document.querySelector(".character-count").innerHTML = 
+          `<span id="char-count">${count}</span> 文字`;
+      }
+
+      // 初期化
       document.addEventListener("DOMContentLoaded", function () {
-        setLanguage("ja");
         initEditor();
       });
     </script>
