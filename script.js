@@ -5,7 +5,6 @@ function initEditor() {
   const boldBtn = document.getElementById("bold-btn");
   const underlineBtn = document.getElementById("underline-btn");
   const clearFormatBtn = document.getElementById("clear-format-btn");
-  const clearBtn = document.getElementById("clear-btn");
   const fontSizeSlider = document.getElementById("font-size");
   const fontSizeValue = document.getElementById("font-size-value");
   const lineSpacingSlider = document.getElementById("line-spacing");
@@ -18,18 +17,23 @@ function initEditor() {
   const settingsBtn = document.getElementById("settings-btn");
   const settingsModal = document.getElementById("settings-modal");
   const closeSettings = document.getElementById("close-settings");
-  const confirmationDialog = document.getElementById(
-    "confirmation-dialog"
-  );
+  const resetDataBtn = document.getElementById("reset-data-btn");
+  
+  // 確認ダイアログ関連の要素
+  const confirmationDialog = document.getElementById("confirmation-dialog");
   const cancelClearBtn = document.getElementById("cancel-clear");
   const confirmClearBtn = document.getElementById("confirm-clear");
+
+  // 現在の確認アクション（関数への参照）
+  let currentConfirmAction = null;
 
   // 保存されたデータを読み込む
   loadData();
 
   // プレースホルダーテキストをフォーカス時に削除
   editor.addEventListener("focus", function () {
-    if (this.textContent === "ここにテキストを入力してください...") {
+    if (this.textContent === "ここにテキストを入力してください..." || 
+        this.textContent === "ここにテキストを入力・・・") {
       this.textContent = "";
     }
   });
@@ -50,24 +54,6 @@ function initEditor() {
   // 書式のクリア
   clearFormatBtn.addEventListener("click", function () {
     document.execCommand("removeFormat", false, null);
-    editor.focus();
-    saveEditorContent();
-  });
-
-  // 全内容のクリア（確認ダイアログ付き）
-  clearBtn.addEventListener("click", function () {
-    confirmationDialog.classList.remove("hidden");
-  });
-
-  // 確認ダイアログの操作
-  cancelClearBtn.addEventListener("click", function () {
-    confirmationDialog.classList.add("hidden");
-  });
-
-  confirmClearBtn.addEventListener("click", function () {
-    editor.innerHTML = "";
-    updateCharCount();
-    confirmationDialog.classList.add("hidden");
     editor.focus();
     saveEditorContent();
   });
@@ -100,6 +86,25 @@ function initEditor() {
     editorContainer.style.height = `${height}px`;
     heightValueDisplay.textContent = `${height}px`;
     saveSettings();
+  });
+
+  // データリセットボタン
+  resetDataBtn.addEventListener("click", function() {
+    // 確認ダイアログを表示
+    currentConfirmAction = resetAllData;
+    confirmationDialog.classList.remove("hidden");
+  });
+
+  // 確認ダイアログの操作
+  cancelClearBtn.addEventListener("click", function() {
+    confirmationDialog.classList.add("hidden");
+  });
+
+  confirmClearBtn.addEventListener("click", function() {
+    if (typeof currentConfirmAction === 'function') {
+      currentConfirmAction();
+    }
+    confirmationDialog.classList.add("hidden");
   });
 
   // ヘルプモーダル
@@ -139,6 +144,44 @@ function initEditor() {
   window.addEventListener("beforeunload", function(e) {
     saveEditorContent(); // ページを離れる前に最終保存
   });
+}
+
+// すべてのデータをリセットする関数
+function resetAllData() {
+  // LocalStorageからすべてのデータを削除
+  localStorage.removeItem('verticalEditorContent');
+  localStorage.removeItem('verticalEditorSettings');
+  
+  // エディタ内容をクリア
+  const editor = document.getElementById("editor");
+  editor.innerHTML = "";
+  updateCharCount();
+  
+  // デフォルト設定に戻す
+  const editorContainer = document.getElementById("editor-container");
+  const fontSizeSlider = document.getElementById("font-size");
+  const fontSizeValue = document.getElementById("font-size-value");
+  const lineSpacingSlider = document.getElementById("line-spacing");
+  const lineSpacingValue = document.getElementById("line-spacing-value");
+  const editorHeightSlider = document.getElementById("editor-height");
+  const heightValueDisplay = document.getElementById("height-value");
+  
+  // デフォルト値を設定
+  fontSizeSlider.value = 16;
+  editor.style.fontSize = "16px";
+  fontSizeValue.textContent = "16px";
+  
+  lineSpacingSlider.value = 2.5;
+  editor.style.lineHeight = 2.5;
+  lineSpacingValue.textContent = "2.5";
+  
+  editorHeightSlider.value = 500;
+  editorContainer.style.height = "500px";
+  heightValueDisplay.textContent = "500px";
+  
+  // 成功メッセージを表示
+  alert("すべてのデータがリセットされました。");
+  location.reload()
 }
 
 // エディタの内容を保存

@@ -208,9 +208,6 @@
                 >
                   <i class="fas fa-remove-format"></i>
                 </button>
-                <button id="clear-btn" class="toolbar-btn" title="クリア">
-                  <i class="fas fa-eraser"></i>
-                </button>
               </div>
               <div class="text-sm text-paper character-count">
                 <span id="char-count">0</span> 文字
@@ -349,6 +346,19 @@
               500px
             </div>
           </div>
+          
+          <!-- リセットボタンを追加 -->
+          <div class="pt-4 border-t border-gray-200">
+            <button
+              id="reset-data-btn"
+              class="w-full px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors flex items-center justify-center"
+            >
+              <i class="fas fa-trash-alt mr-2"></i> すべてのデータをリセット
+            </button>
+            <p class="text-xs text-secondary mt-2 text-center">
+              ※ 保存されたエディタ内容と設定がすべて削除されます
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -358,10 +368,10 @@
       <div class="confirmation-dialog-overlay"></div>
       <div class="confirmation-dialog">
         <h3 class="text-lg font-bold text-primary mb-2" id="confirmation-title">
-          確認
+            データリセットの確認
         </h3>
         <p class="text-primary" id="confirmation-message">
-          エディタの内容をすべて消去しますか？この操作は元に戻せません。
+            すべての保存されたデータ（エディタ内容と設定）を削除しますか？この操作は元に戻せません。
         </p>
         <div class="confirmation-dialog-buttons">
           <button
