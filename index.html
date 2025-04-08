@@ -10,177 +10,39 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap"
     />
-    <style>
-      .vertical-text {
-        writing-mode: vertical-rl;
-        text-orientation: mixed; /* アルファベットを横倒しに */
-        letter-spacing: 0.2em;
-        line-height: 2.5;
-        font-family: "Noto Serif JP", serif;
-        height: 100%;
-        padding: 2rem 1rem;
-        overflow-y: auto;
-        color: #3a4a42;
-        max-width: 100%;
-        word-wrap: break-word;
-      }
-
-      .vertical-text:focus {
-        outline: none;
-      }
-
-      .paper-texture {
-        background-color: #faf9f5; /* より白に近い紙色 */
-        background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h100v100H0z" fill="%23faf9f5"/><path d="M20 0v100M40 0v100M60 0v100M80 0v100M0 20h100M0 40h100M0 60h100M0 80h100" stroke="%23e0dcd0" stroke-width="0.3" opacity="0.3"/></svg>');
-        background-size: 50px 50px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-        border: 1px solid #e0dcd0;
-      }
-
-      /* アルファベット用のスタイル（横倒し） */
-      .tatechuyoko {
-        text-combine-upright: all;
-        display: inline-block;
-        transform: rotate(90deg);
-        transform-origin: left bottom;
-      }
-
-      .language-selector {
-        transition: all 0.3s ease;
-      }
-
-      .language-selector:hover {
-        transform: scale(1.05);
-      }
-
-      .fade-in {
-        animation: fadeIn 0.5s ease-in-out;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-        }
-        to {
-          opacity: 1;
-        }
-      }
-
-      .character-count {
-        font-family: "Noto Serif JP", serif;
-      }
-
-      /* カスタムカラーパレット */
-      .bg-primary {
-        background-color: #3a4a42;
-      }
-
-      .text-primary {
-        color: #3a4a42;
-      }
-
-      .bg-secondary {
-        background-color: #5a6e65;
-      }
-
-      .text-secondary {
-        color: #5a6e65;
-      }
-
-      .bg-accent {
-        background-color: #8b9e87;
-      }
-
-      .text-accent {
-        color: #8b9e87;
-      }
-
-      .bg-paper {
-        background-color: #faf9f5;
-      }
-
-      .text-paper {
-        color: #faf9f5;
-      }
-
-      .border-primary {
-        border-color: #3a4a42;
-      }
-
-      /* ツールバーボタンのスタイル */
-      .toolbar-btn {
-        color: white;
-        transition: all 0.2s ease;
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        padding: 6px 8px;
-      }
-
-      .toolbar-btn:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-        transform: scale(1.1);
-      }
-
-      .toolbar-container {
-        background-color: #5a6e65;
-        padding: 8px 12px;
-      }
-
-      /* 確認ダイアログのスタイル */
-      .confirmation-dialog {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 2rem;
-        border-radius: 0.5rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        z-index: 100;
-        max-width: 400px;
-        width: 90%;
-      }
-
-      .confirmation-dialog-buttons {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-        margin-top: 1.5rem;
-      }
-
-      .confirmation-dialog-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 99;
-      }
-    </style>
+    <link rel="stylesheet" href="./style.css" />
   </head>
-  <body class="bg-paper min-h-screen">
-    <div class="container mx-auto px-4 py-8">
+  <body class="bg-white min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
       <div class="flex justify-between items-center mb-6">
-        <h1 class="text-3xl font-bold text-primary flex items-center">
-          <i class="fas fa-brush mr-3 text-accent"></i>
-          <span>縦書きエディタ</span>
-        </h1>
+        <div class="flex items-center space-x-2">
+          <i
+            class="fa-solid fa-align-left rotate-90 text-5xl mx-4 text-accent"
+          ></i>
+          <div>
+            <span class="text-md">縦書きエディタ</span>
+            <h1 class="text-2xl font-bold text-primary flex items-center">
+              たてっと
+            </h1>
+          </div>
+        </div>
 
         <div class="flex items-center space-x-2">
           <button
+            type="button"
             id="settings-btn"
-            class="p-2 rounded-full bg-white shadow-md hover:bg-accent hover:text-paper transition-colors"
+            class="w-10 h-10 rounded-full bg-white shadow-md"
             title="設定"
           >
             <i class="fas fa-cog text-primary"></i>
           </button>
           <button
+            type="button"
             id="help-btn"
-            class="p-2 rounded-full bg-white shadow-md hover:bg-accent hover:text-paper transition-colors"
+            class="w-10 h-10 rounded-full bg-white shadow-md"
             title="ヘルプ"
           >
             <i class="fas fa-question text-primary"></i>
@@ -192,39 +54,63 @@
         <div class="w-full">
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
             <div
-              class="flex justify-between items-center toolbar-container px-4 py-2"
+              class="flex justify-between items-center bg-secondary px-6 py-4"
             >
-              <div class="flex space-x-2">
-                <button id="bold-btn" class="toolbar-btn" title="太字">
+              <div class="flex space-x-4">
+                <button
+                  type="button"
+                  id="bold-btn"
+                  class="text-white hover:opacity-80"
+                  title="太字"
+                >
                   <i class="fas fa-bold"></i>
                 </button>
-                <button id="underline-btn" class="toolbar-btn" title="下線">
+                <button
+                  type="button"
+                  id="underline-btn"
+                  class="text-white hover:opacity-80"
+                  title="下線"
+                >
                   <i class="fas fa-underline"></i>
                 </button>
                 <button
+                  type="button"
                   id="clear-format-btn"
-                  class="toolbar-btn"
+                  class="text-white hover:opacity-80"
                   title="書式クリア"
                 >
                   <i class="fas fa-remove-format"></i>
                 </button>
               </div>
-              <div class="text-sm text-paper character-count">
-                <span id="char-count">0</span> 文字
+              <div class="flex space-x-4">
+                <button
+                  type="submit"
+                  id="download-btn"
+                  class="text-white hover:opacity-80"
+                  title="テキストファイルをダウンロード"
+                >
+                  <i class="fas fa-download"></i>
+                </button>
               </div>
             </div>
 
-            <div
-              id="editor-container"
-              class="paper-texture"
-              style="height: 500px"
-            >
+            <div id="editor-container" class="paper-texture">
               <div
                 id="editor"
                 class="vertical-text w-full h-full"
                 contenteditable="true"
               >
                 ここにテキストを入力・・・
+              </div>
+            </div>
+
+            <div
+              class="flex justify-end items-center bg-secondary px-6 py-4"
+            >
+              <div class="flex space-x-4">
+                <div class="text-sm text-white character-count">
+                  <span id="char-count">0</span> 文字
+                </div>
               </div>
             </div>
           </div>
@@ -238,31 +124,32 @@
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
     >
       <div
-        class="bg-paper rounded-lg shadow-xl max-w-2xl w-full p-6 max-h-[80vh] overflow-y-auto"
+        class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 max-h-[80vh] overflow-y-auto"
       >
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-2xl font-bold text-primary" id="help-title">
-            ヘルプ
+            たてっとの使い方
           </h3>
-          <button id="close-help" class="text-primary hover:text-secondary">
+          <button
+            type="button"
+            id="close-help"
+            class="text-primary hover:text-secondary"
+            title="閉じる"
+          >
             <i class="fas fa-times"></i>
           </button>
         </div>
         <div class="space-y-4 text-primary" id="help-content">
           <p>
-            この縦書きエディタは日本語の伝統的な縦書きスタイルでテキストを書くことができます。
+            「たてっと」では、日本語の縦書きスタイルでテキストを書くことができます。
           </p>
-          <p>
-            <strong>太字</strong
-            >や<strong>下線</strong>などの基本的な書式設定が可能です。
+          <p>書式の設定は、エディタ左上のボタンから
+            <strong>太字</strong>と<span class="underline">下線</span>に対応しています。
           </p>
-          <p>アルファベットは自動的に横倒し（縦中横）で表示されます。</p>
-          <p>
-            設定パネルから文字サイズ、行間、エディタの高さを調整できます。
-          </p>
-          <p class="text-sm text-secondary">
-            ※ このアプリはブラウザ上で動作します。
-          </p>
+          <p>設定画面から文字サイズ、行間、エディタの高さを調整できます。</p>
+          <p>エディタの設定と入力内容はブラウザに自動保存されます。</p>
+          <p>テキストファイル（.txt）として保存したい場合は、左下のボタンからダウンロードできます。</p>
+          <p>エディタの内容をリセットしたい場合は、設定画面から「すべてのデータをリセット」を選択してください。</p>
         </div>
       </div>
     </div>
@@ -273,13 +160,16 @@
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
     >
       <div
-        class="bg-paper rounded-lg shadow-xl max-w-md w-full p-6 max-h-[80vh] overflow-y-auto"
+        class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 max-h-[80vh] overflow-y-auto"
       >
         <div class="flex justify-between items-center mb-4">
-          <h3 class="text-2xl font-bold text-primary">
-            設定
-          </h3>
-          <button id="close-settings" class="text-primary hover:text-secondary">
+          <h3 class="text-2xl font-bold text-primary">設定</h3>
+          <button
+            type="submit"
+            id="close-settings"
+            class="text-primary hover:text-secondary"
+            title="完了"
+          >
             <i class="fa-solid fa-check"></i>
           </button>
         </div>
@@ -295,13 +185,17 @@
                 id="font-size"
                 min="12"
                 max="36"
-                value="16"
+                value="18"
                 class="w-full accent-primary"
+                title="文字サイズ"
               />
               <span class="text-xs text-secondary">大</span>
             </div>
-            <div class="text-xs text-secondary mt-1 text-center" id="font-size-value">
-              16px
+            <div
+              class="text-xs text-secondary mt-1 text-center"
+              id="font-size-value"
+            >
+              18px
             </div>
           </div>
           <div>
@@ -315,14 +209,18 @@
                 id="line-spacing"
                 min="1"
                 max="5"
-                step="0.5"
-                value="2.5"
+                step="0.1"
+                value="2"
                 class="w-full accent-primary"
+                title="行間"
               />
               <span class="text-xs text-secondary">広</span>
             </div>
-            <div class="text-xs text-secondary mt-1 text-center" id="line-spacing-value">
-              2.5
+            <div
+              class="text-xs text-secondary mt-1 text-center"
+              id="line-spacing-value"
+            >
+              2
             </div>
           </div>
           <div>
@@ -339,24 +237,28 @@
                 step="10"
                 value="500"
                 class="w-full accent-primary"
+                title="エディタの高さ"
               />
               <span class="text-xs text-secondary">高</span>
             </div>
-            <div class="text-xs text-secondary mt-1 text-center" id="height-value">
+            <div
+              class="text-xs text-secondary mt-1 text-center"
+              id="height-value"
+            >
               500px
             </div>
           </div>
-          
+
           <!-- リセットボタンを追加 -->
           <div class="pt-4 border-t border-gray-200">
             <button
               id="reset-data-btn"
-              class="w-full px-4 py-2 rounded-md bg-red-500 text-white hover:bg-red-600 transition-colors flex items-center justify-center"
+              class="w-full px-4 py-2 rounded-md bg-primary text-white hover:bg-red-500 flex items-center justify-center"
             >
               <i class="fas fa-trash-alt mr-2"></i> すべてのデータをリセット
             </button>
             <p class="text-xs text-secondary mt-2 text-center">
-              ※ 保存されたエディタ内容と設定がすべて削除されます
+              ※ 保存された設定と入力データがすべて削除されます
             </p>
           </div>
         </div>
@@ -368,21 +270,23 @@
       <div class="confirmation-dialog-overlay"></div>
       <div class="confirmation-dialog">
         <h3 class="text-lg font-bold text-primary mb-2" id="confirmation-title">
-            データリセットの確認
+          データリセットの確認
         </h3>
         <p class="text-primary" id="confirmation-message">
-            すべての保存されたデータ（エディタ内容と設定）を削除しますか？この操作は元に戻せません。
+          すべての保存されたデータ（入力データと設定）を削除しますか？この操作は元に戻せません。
         </p>
         <div class="confirmation-dialog-buttons">
           <button
+            type="button"
             id="cancel-clear"
-            class="px-4 py-2 rounded-md border border-primary text-primary hover:bg-gray-100 transition-colors"
+            class="px-4 py-2 rounded-md border border-primary text-primary hover:bg-gray-100"
           >
             キャンセル
           </button>
           <button
+            type="button"
             id="confirm-clear"
-            class="px-4 py-2 rounded-md bg-primary text-paper hover:bg-secondary transition-colors"
+            class="px-4 py-2 rounded-md bg-red-500 hover:bg-red-600 text-white hover:bg-secondary"
           >
             消去する
           </button>

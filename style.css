@@ -1,6 +1,5 @@
 body {
-	padding: 2rem;
-	font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+	font-family: "Noto Serif JP", serif;
 }
 
 h1 {
@@ -25,4 +24,131 @@ p {
 
 .card p:last-child {
 	margin-bottom: 0;
+}
+
+.vertical-text {
+	writing-mode: vertical-rl;
+	text-orientation: mixed;
+	letter-spacing: 0px;
+	line-height: 2.5;
+	height: 100%;
+	padding: 2rem 1rem;
+	overflow-y: auto;
+	color: #3a4a42;
+	max-width: 100%;
+	word-wrap: break-word;
+}
+
+.vertical-text:focus {
+	outline: none;
+}
+
+/* アルファベット用のスタイル（横倒し） */
+.tatechuyoko {
+	text-combine-upright: all;
+	display: inline-block;
+	transform: rotate(90deg);
+	transform-origin: left bottom;
+}
+
+.language-selector {
+	transition: all 0.3s ease;
+}
+
+.language-selector:hover {
+	transform: scale(1.05);
+}
+
+.fade-in {
+	animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.character-count {
+	font-family: "Noto Serif JP", serif;
+}
+
+/* カスタムカラーパレット */
+.paper-texture {
+	background-color: #faf9f5; /* より白に近い紙色 */
+	border: 1px solid #e0dcd0;
+}
+
+.bg-primary {
+	background-color: #3a4a42;
+}
+
+.text-primary {
+	color: #3a4a42;
+}
+
+.bg-secondary {
+	background-color: #5a6e65;
+}
+
+.text-secondary {
+	color: #5a6e65;
+}
+
+.bg-accent {
+	background-color: #8b9e87;
+}
+
+.text-accent {
+	color: #8b9e87;
+}
+
+.bg-white {
+	background-color: #faf9f5;
+}
+
+.text-white {
+	color: #faf9f5;
+}
+
+.border-primary {
+	border-color: #3a4a42;
+}
+
+/* 確認ダイアログのスタイル */
+.confirmation-dialog {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: white;
+	padding: 2rem;
+	border-radius: 0.5rem;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+	z-index: 100;
+	max-width: 400px;
+	width: 90%;
+}
+
+.confirmation-dialog-buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	margin-top: 1.5rem;
+}
+
+.confirmation-dialog-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 99;
+}
+#editor-container {
+	height: 500px; /* デフォルトの高さ */
 }

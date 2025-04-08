@@ -5,6 +5,7 @@ function initEditor() {
   const boldBtn = document.getElementById("bold-btn");
   const underlineBtn = document.getElementById("underline-btn");
   const clearFormatBtn = document.getElementById("clear-format-btn");
+  const downloadBtn = document.getElementById("download-btn");
   const fontSizeSlider = document.getElementById("font-size");
   const fontSizeValue = document.getElementById("font-size-value");
   const lineSpacingSlider = document.getElementById("line-spacing");
@@ -24,7 +25,7 @@ function initEditor() {
   const cancelClearBtn = document.getElementById("cancel-clear");
   const confirmClearBtn = document.getElementById("confirm-clear");
 
-  // 現在の確認アクション（関数への参照）
+  // 現在の確認アクション（関数への参照）  
   let currentConfirmAction = null;
 
   // 保存されたデータを読み込む
@@ -56,6 +57,11 @@ function initEditor() {
     document.execCommand("removeFormat", false, null);
     editor.focus();
     saveEditorContent();
+  });
+
+  // ダウンロードボタン
+  downloadBtn.addEventListener("click", function() {
+    downloadEditorContent();
   });
 
   // 文字数カウント & エディタ内容の自動保存
@@ -271,6 +277,50 @@ function updateCharCount() {
   document.getElementById("char-count").textContent = count;
   document.querySelector(".character-count").innerHTML = 
     `<span id="char-count">${count}</span> 文字`;
+}
+
+// エディタ内容をテキストファイルとしてダウンロード
+function downloadEditorContent() {
+  const editor = document.getElementById("editor");
+  
+  // HTMLタグを除去してプレーンテキストを取得
+  let content = editor.innerText;
+  
+  // 空のエディタや初期プレースホルダーの場合
+  if (content.trim() === "" || 
+      content.trim() === "ここにテキストを入力してください..." ||
+      content.trim() === "ここにテキストを入力・・・") {
+    alert("ダウンロードするコンテンツがありません。");
+    return;
+  }
+  
+  // 現在の日時を取得してファイル名に使用
+  const now = new Date();
+  const dateStr = now.getFullYear() + 
+    ("0" + (now.getMonth() + 1)).slice(-2) + 
+    ("0" + now.getDate()).slice(-2) + "_" + 
+    ("0" + now.getHours()).slice(-2) + 
+    ("0" + now.getMinutes()).slice(-2);
+  
+  // ファイル名を設定
+  const filename = `縦書きエディタ_${dateStr}.txt`;
+  
+  // BlobオブジェクトとURLを作成
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  
+  // ダウンロードリンクを作成して自動クリック
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  
+  // クリーンアップ
+  setTimeout(() => {
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }, 100);
 }
 
 // 初期化
