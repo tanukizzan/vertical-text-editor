@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>縦書きテキストエディタ | Vertical Text Editor</title>
+    <title>縦書きテキストエディタ たてっと</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/favicon" href="./favicon.svg">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -15,86 +16,53 @@
     />
     <link rel="stylesheet" href="./style.css" />
   </head>
-  <body class="bg-white min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-3xl">
+  <body class="bg-paper min-h-screen">
+    <div class="container mx-auto px-6 py-8 max-w-4xl">
       <div class="flex justify-between items-center mb-6">
         <div class="flex items-center space-x-2">
           <i
-            class="fa-solid fa-align-left rotate-90 text-5xl mx-4 text-accent"
+            class="fa-solid fa-align-left rotate-90 sm:text-5xl text-3xl sm:mx-4 mx-2 text-accent"
           ></i>
           <div>
-            <span class="text-md">縦書きエディタ</span>
-            <h1 class="text-2xl font-bold text-primary flex items-center">
+            <span class="sm:text-base text-sm">縦書きエディタ</span>
+            <h1 class="sm:text-2xl text-xl font-bold text-primary flex items-center">
               たてっと
             </h1>
           </div>
         </div>
 
-        <div class="flex items-center space-x-2">
+        <div class="flex justify-between items-center space-x-3 sm:mx-4 mx-2">
+          <button
+            type="submit"
+            id="download-btn"
+            class="w-10 h-10 rounded-full bg-paper drop-shadow-md hover:opacity-80"
+            title="テキストファイルをダウンロード"
+          >
+            <i class="fas fa-download text-primary hover:opacity-80"></i>
+          </button>
           <button
             type="button"
             id="settings-btn"
-            class="w-10 h-10 rounded-full bg-white shadow-md"
+            class="w-10 h-10 rounded-full bg-paper drop-shadow-md hover:opacity-80"
             title="設定"
           >
-            <i class="fas fa-cog text-primary"></i>
+            <i class="fas fa-cog text-primary hover:opacity-80"></i>
           </button>
           <button
             type="button"
             id="help-btn"
-            class="w-10 h-10 rounded-full bg-white shadow-md"
+            class="w-10 h-10 rounded-full bg-paper drop-shadow-md hover:opacity-80"
             title="ヘルプ"
           >
-            <i class="fas fa-question text-primary"></i>
+            <i class="fas fa-question text-primary hover:opacity-80"></i>
           </button>
         </div>
       </div>
 
       <div class="flex flex-col lg:flex-row gap-6">
         <div class="w-full">
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <div
-              class="flex justify-between items-center bg-secondary px-6 py-4"
-            >
-              <div class="flex space-x-4">
-                <button
-                  type="button"
-                  id="bold-btn"
-                  class="text-white hover:opacity-80"
-                  title="太字"
-                >
-                  <i class="fas fa-bold"></i>
-                </button>
-                <button
-                  type="button"
-                  id="underline-btn"
-                  class="text-white hover:opacity-80"
-                  title="下線"
-                >
-                  <i class="fas fa-underline"></i>
-                </button>
-                <button
-                  type="button"
-                  id="clear-format-btn"
-                  class="text-white hover:opacity-80"
-                  title="書式クリア"
-                >
-                  <i class="fas fa-remove-format"></i>
-                </button>
-              </div>
-              <div class="flex space-x-4">
-                <button
-                  type="submit"
-                  id="download-btn"
-                  class="text-white hover:opacity-80"
-                  title="テキストファイルをダウンロード"
-                >
-                  <i class="fas fa-download"></i>
-                </button>
-              </div>
-            </div>
-
-            <div id="editor-container" class="paper-texture">
+          <div class="bg-paper rounded-lg overflow-hidden">
+            <div id="editor-container" class="bg-paper">
               <div
                 id="editor"
                 class="vertical-text w-full h-full"
@@ -105,10 +73,37 @@
             </div>
 
             <div
-              class="flex justify-end items-center bg-secondary px-6 py-4"
+              class="flex justify-between items-center bg-secondary px-6 py-4"
             >
               <div class="flex space-x-4">
-                <div class="text-sm text-white character-count">
+                <button
+                  type="button"
+                  id="bold-btn"
+                  class="text-paper hover:opacity-80"
+                  title="太字"
+                >
+                  <i class="fas fa-bold"></i>
+                </button>
+                <button
+                  type="button"
+                  id="underline-btn"
+                  class="text-paper hover:opacity-80"
+                  title="下線"
+                >
+                  <i class="fas fa-underline"></i>
+                </button>
+                <button
+                  type="button"
+                  id="clear-format-btn"
+                  class="text-paper hover:opacity-80"
+                  title="書式クリア"
+                >
+                  <i class="fas fa-remove-format"></i>
+                </button>
+              </div>
+
+              <div class="flex space-x-4">
+                <div class="text-sm text-paper character-count">
                   <span id="char-count">0</span> 文字
                 </div>
               </div>
@@ -124,32 +119,47 @@
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
     >
       <div
-        class="bg-white rounded-lg shadow-xl max-w-lg w-full p-6 max-h-[80vh] overflow-y-auto"
+        class="vertical-text bg-paper rounded-lg drop-shadow-xl max-w-xl w-full px-8 py-10 max-h-[70vh] overflow-y-auto"
       >
-        <div class="flex justify-between items-center mb-4">
+        <div class="flex justify-between items-center">
           <h3 class="text-2xl font-bold text-primary" id="help-title">
             たてっとの使い方
           </h3>
           <button
             type="button"
             id="close-help"
-            class="text-primary hover:text-secondary"
+            class="text-primary"
             title="閉じる"
           >
-            <i class="fas fa-times"></i>
+            <i class="fas fa-times hover:opacity-80"></i>
           </button>
         </div>
-        <div class="space-y-4 text-primary" id="help-content">
+        <div class="text-primary mr-4" id="help-content">
           <p>
-            「たてっと」では、日本語の縦書きスタイルでテキストを書くことができます。
+            たてっとは、ブラウザでうごく縦書き特化のテキストエディタです。
           </p>
-          <p>書式の設定は、エディタ左上のボタンから
-            <strong>太字</strong>と<span class="underline">下線</span>に対応しています。
+          <p>
+            文字の装飾は、エディタ下部のツールバーから
+            <i class="fas fa-bold my-2"></i><strong>太字</strong>と<i
+              class="fas fa-underline my-2"
+            ></i
+            ><span class="underline">下線</span>に対応。<i class="fas fa-remove-format"></i>で書式をクリアできます。
           </p>
-          <p>設定画面から文字サイズ、行間、エディタの高さを調整できます。</p>
-          <p>エディタの設定と入力内容はブラウザに自動保存されます。</p>
-          <p>テキストファイル（.txt）として保存したい場合は、左下のボタンからダウンロードできます。</p>
-          <p>エディタの内容をリセットしたい場合は、設定画面から「すべてのデータをリセット」を選択してください。</p>
+          <p>
+            エディタの設定は、<i class="fas fa-cog text-primary my-2"></i
+            >ボタンから文字サイズ、行間、エディタの高さを調整できます。
+          </p>
+          <p>入力内容とエディタの設定はブラウザに自動保存されます。</p>
+          <p>
+            テキストファイル（.txt）として保存したい場合は<i
+              class="fas fa-download text-primary my-2"
+            ></i
+            >ボタンからダウンロードできます。
+          </p>
+          <p>
+            エディタの内容をリセットしたい場合は、設定画面から「すべてのデータをリセット」を選択してください。
+          </p>
+          <a href="https://github.com/tanukizzan/vertical-text-editor"><p class="text-right text-sm mx-4 hover:opacity-80">&copy; 2025 tanukizzan</p></a>
         </div>
       </div>
     </div>
@@ -160,17 +170,17 @@
       class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50"
     >
       <div
-        class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 max-h-[80vh] overflow-y-auto"
+        class="bg-paper rounded-lg shadow-xl max-w-md w-full p-6 max-h-[80vh] overflow-y-auto"
       >
         <div class="flex justify-between items-center mb-4">
           <h3 class="text-2xl font-bold text-primary">設定</h3>
           <button
             type="submit"
             id="close-settings"
-            class="text-primary hover:text-secondary"
+            class="text-primary"
             title="完了"
           >
-            <i class="fa-solid fa-check"></i>
+            <i class="fa-solid fa-check hover:opacity-80"></i>
           </button>
         </div>
         <div class="space-y-6 text-primary">
@@ -253,7 +263,7 @@
           <div class="pt-4 border-t border-gray-200">
             <button
               id="reset-data-btn"
-              class="w-full px-4 py-2 rounded-md bg-primary text-white hover:bg-red-500 flex items-center justify-center"
+              class="w-full px-4 py-2 rounded-md bg-primary text-paper hover:bg-red-500 flex items-center justify-center"
             >
               <i class="fas fa-trash-alt mr-2"></i> すべてのデータをリセット
             </button>
@@ -286,7 +296,7 @@
           <button
             type="button"
             id="confirm-clear"
-            class="px-4 py-2 rounded-md bg-red-500 hover:bg-red-600 text-white hover:bg-secondary"
+            class="px-4 py-2 rounded-md bg-red-500 hover:bg-red-600 text-paper hover:bg-secondary"
           >
             消去する
           </button>
