@@ -16,7 +16,7 @@
 
 ## つくった経緯
 
-iPadの縦書きエディタ（stone）を使って、ブラウザでも動く縦書きエディタが欲しくなったので制作しました。
+iPadの縦書きエディタ（[stone](https://stone-type.jp/)）を使って、ブラウザでも動く縦書きエディタが欲しくなったので制作しました。
 
 [DeepSite](https://huggingface.co/spaces/enzostvs/deepsite) で大枠を作成後、GitHub Copilotで動作に問題があった履歴機能などを修正・実装。
 
